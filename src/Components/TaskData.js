@@ -15,6 +15,7 @@ class TaskData extends React.Component {
             assigned: '',
             status: '',
             assignData: '',
+            newTaskList: [],
             tasks: this.props.taskDetails && this.props.taskDetails.length>0 ? this.props.taskDetails : TaskDetails
         }
     }
@@ -27,6 +28,7 @@ class TaskData extends React.Component {
     }
     addTask = (status) => {
         let { projectDetails } = this.props;
+        let newTaskList = this.state.newTaskList;
         let tasks = this.state.tasks;
         let tasksList = this.state.tasks && this.state.tasks[projectDetails.id - 1] && this.state.tasks[projectDetails.id - 1][projectDetails.id];
         if(tasksList && tasksList.length > 0) {
@@ -41,11 +43,24 @@ class TaskData extends React.Component {
                     return list;
                 })
             }
+        }else {
+            if(status === 'create') {
+                newTaskList.push({id: newTaskList.length + 1, name: this.state.taskName, assigned_to: this.state.assigned, status: this.state.status})
+            }else {
+                newTaskList = newTaskList.map(list => {
+                if(list.id === this.state.assignData.id) {
+                    list.assigned_to = this.state.assigned ? this.state.assigned : list.assigned_to;
+                    list.status = this.state.status ? this.state.status : list.status;
+                }
+                return list;
+                })
+            }
         }
-        tasks[projectDetails.id - 1][projectDetails.id] = tasksList;
-        console.log('@@@@', tasks)
+        if(tasks[projectDetails.id - 1]){
+            tasks[projectDetails.id - 1][projectDetails.id] = tasksList;
+        }
         this.props.setTaskDetails(tasks)
-        this.setState({ tasks, taskName: '' })
+        this.setState({ tasks, taskName: '',newTaskList })
     }
     handleChange = (e) => {
         let { name,value } = e.target;
@@ -53,7 +68,7 @@ class TaskData extends React.Component {
     }
     render() {
         let { userDetails, projectDetails } = this.props;
-        let { assignModal, openModal } = this.state;
+        let { assignModal, openModal, tasks } = this.state;
         const columns = [
             {
                 name: 'ID',
@@ -80,14 +95,14 @@ class TaskData extends React.Component {
                 selector: 'actions',
             }
           ];
-        let taskList = this.state.tasks && this.state.tasks[projectDetails.id - 1] && this.state.tasks[projectDetails.id - 1][projectDetails.id]
+        let taskList = tasks && tasks[projectDetails.id - 1] && tasks[projectDetails.id - 1][projectDetails.id] ? tasks[projectDetails.id - 1][projectDetails.id] : this.state.newTaskList;
         const data = taskList && taskList.length > 0 && taskList.map((list)=>{
             return {
                 id: list.id,
                 name: list.name,
                 assigned_to: list.assigned_to,
                 status: list.status,
-                actions: <Link data-toggle="modal" data-target="#show-modal" onClick={(e)=>this.assignTask(e, list)}>Assign</Link>
+                actions: <Link data-toggle="modal" data-target="#show-modal" onClick={(e)=>this.assignTask(e, list)}>{userDetails.user_type === "Manager" ? "Assign" : "Change Status"}</Link>
             }
         })
         return (
@@ -97,7 +112,14 @@ class TaskData extends React.Component {
                 {userDetails.user_type === "Manager" ?
                 <div className="col-md-12">
                     <button class="btn btn-info" data-toggle="modal" data-target="#show-modal" onClick={this.createTask}>Create Task</button>
-                    <div className="modal" id="show-modal">
+                    
+                </div>
+                : null}
+                <DataTable 
+                columns={columns}
+                data={data}
+                />
+                <div className="modal" id="show-modal">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -109,35 +131,36 @@ class TaskData extends React.Component {
                                     <label>Task Name</label>
                                     <input type="text" className="form-control" name="taskName" onChange={(e)=>this.handleChange(e)} value={this.state.taskName}/>
                                 </div> : null}
+                                {userDetails.user_type === "Manager" ? 
                                 <div className="form-group col-md-12">
                                     <label>Assigned To</label>
                                     <input type="text" className="form-control" name="assigned" onChange={(e)=>this.handleChange(e)} value={this.state.assigned}/>
-                                </div>
+                                </div> : null}
                                 <div className="form-group col-md-12">
                                     <label>Status</label>
+                                    {userDetails.user_type === "Manager" ?
                                     <select value={this.state.status} name="status" onChange={(e)=>this.handleChange(e)}>
                                         <option value="Pending">Pending</option>
                                         <option value="In Progress">In Progress</option>
                                         <option value="Completed">Completed</option>
                                         <option value="Not Completed">Not Completed</option>
                                         <option value="Closed">Closed</option>
-                                    </select>
+                                    </select> :
+                                    <select value={this.state.status} name="status" onChange={(e)=>this.handleChange(e)}>
+                                        <option value="Started">Started</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="End">End</option>
+                                    </select> }
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 {openModal ?
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" onClick={()=>this.addTask('create')} disabled={this.state.taskName ? false : true}>Add</button>
-                                : <button  type="button" class="btn btn-primary" data-dismiss="modal" onClick={()=>this.addTask('update')} disabled={this.state.assigned ? false : true}>Update</button> }
+                                : <button  type="button" class="btn btn-primary" data-dismiss="modal" onClick={()=>this.addTask('update')} disabled={this.state.assigned || this.state.status ? false : true}>Update</button> }
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                : null}
-                <DataTable 
-                columns={columns}
-                data={data}
-                />
             </div>
         )
     }
