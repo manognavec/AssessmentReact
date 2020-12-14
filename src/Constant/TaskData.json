@@ -1,0 +1,71 @@
+[
+    {
+        "1":[
+            {
+                "id": 1,
+                "name": "Task1",
+                "assigned_to": "User1",
+                "status": "Pending"
+            },
+            {
+                "id": 2,
+                "name": "Task2",
+                "assigned_to": "User2",
+                "status": "In Progress"
+            },
+            
+            {
+                "id": 3,
+                "name": "Task3",
+                "assigned_to": "User3",
+                "status": "Completed"
+            }
+        ]
+    },
+    {
+        "2":[
+            {
+                "id": 1,
+                "name": "Task1",
+                "assigned_to": "User1",
+                "status": "closed"
+            },
+            {
+                "id": 2,
+                "name": "Task2",
+                "assigned_to": "User2",
+                "status": "Completed"
+            },
+            
+            {
+                "id": 3,
+                "name": "Task3",
+                "assigned_to": "User3",
+                "status": "In Progress"
+            }
+        ]
+    },
+    {
+        "3":[
+            {
+                "id": 1,
+                "name": "Task1",
+                "assigned_to": "User1",
+                "status": "Completed"
+            },
+            {
+                "id": 2,
+                "name": "Task2",
+                "assigned_to": "User2",
+                "status": "In Progress"
+            },
+            
+            {
+                "id": 3,
+                "name": "Task3",
+                "assigned_to": "User3",
+                "status": "In Progress"
+            }
+        ]
+    }
+]

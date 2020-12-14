@@ -1,0 +1,163 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo {
+  margin-right: 100%;
+  margin-left: 31px;
+}
+
+/* Split the screen in half */
+.split {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.mainSplit {
+  height: 100%;
+  width: 80%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+  background-color: white;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  background-color:#568bf5;
+  color: white;
+}
+
+.right-bar h5 {
+  line-height: 43px;
+  text-align: left;
+  padding-left: 12px;
+  margin-bottom: 30px;
+}
+
+.fa-bars {
+  margin-left: 97%;
+}
+
+.icon {
+  width: 100px;
+  height: 95px;
+}
+
+.vehicle-icon {
+  background-color: rgb(51, 51, 253);
+  padding: 13px;
+  border-radius: 53px;
+  height: 34px;
+  color: white;
+  padding-top: 2px;
+  position: absolute;
+  margin-left: 8px;
+}
+
+.count-range {
+  margin-right: 72%;
+  margin-bottom: 0px;
+}
+
+.form-elegant {
+  padding: 21px
+}
+
+.btn-info {
+  margin-left: 75%;
+  width: 86px;
+}
+
+.modal-footer {
+  border: none
+}
+
+.react-datepicker-wrapper {
+  display: block;
+}
+
+.form-group {
+  line-height: 10px;
+}
+.form-group p {
+  line-height: initial;
+}
+
+.required {
+  position: relative;
+  bottom: 20px;
+  left: 219px;
+  color: red;
+}
+
+.success-msg {
+  color: green;
+}
+
+.error {
+  position: absolute;
+  left: 10px;
+  padding: 7px;
+  color: red;
+}
+
+.modal-dialog {
+  max-width: 600px;
+}
+
+.heading {
+  color: rgb(173, 168, 168);
+}
+
+.detailHeading {
+  color: rgb(15, 15, 15);
+}
